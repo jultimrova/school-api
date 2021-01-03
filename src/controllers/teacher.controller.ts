@@ -20,7 +20,10 @@ export async function createTeacher(req: Request, res: Response): Promise<Respon
     const conn = await connect();
     await conn.query('INSERT INTO teacher SET ?', [newTeacher]);
     return res.json({
-        message: 'Teacher added',
+        message: `Teacher ${newTeacher.first_name} ${newTeacher.last_name} added`,
+        body: {
+            newTeacher
+        }
     });
 }
 
@@ -40,5 +43,8 @@ export async function updateTeacher(req: Request, res: Response): Promise<Respon
     await conn.query('UPDATE teacher SET ? WHERE id = ?', [updatedTeacher, id]);
     return res.json({
         message: 'Teacher was updated',
+        body: {
+            updatedTeacher
+        }
     });
 }

@@ -1,10 +1,10 @@
 import express, {Application} from 'express';
 import morgan from 'morgan';
+import bodyParser from 'body-parser';
 
 // Routes
 import IndexRoutes from './routes/index.routes';
 import TeachersRoutes from './routes/teacher.routes';
-import bodyParser from 'body-parser';
 
 class App {
     private app: Application;
@@ -22,8 +22,8 @@ class App {
 
     middlewares() {
         this.app.use(morgan('dev'));
+        this.app.use(bodyParser.urlencoded({extended: false}))
         this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({extended: true}))
     }
 
     routes() {
