@@ -4,6 +4,9 @@ import connect from '../db';
 
 export async function getTeachers(req: Request, res: Response): Promise<Response> {
   const conn = await connect();
+  const gender = req.query.gender || 'F';
+  const yearsOfExperience = req.query.yearsOfExperience || 10;
+  const limit = req.query.limit || 10;
   const teachers = await conn.query(`SELECT teacher.id,
                                               first_name,
                                               last_name,
@@ -12,14 +15,15 @@ export async function getTeachers(req: Request, res: Response): Promise<Response
                                               subject_taught,
                                               years_of_experience
                                        FROM teacher
-                                       WHERE gender = 'F'
-                                         AND years_of_experience > 15
-                                       ORDER BY id LIMIT 10`);
+                                       WHERE gender = '${gender}'
+                                         AND years_of_experience > '${yearsOfExperience}'
+                                       ORDER BY id LIMIT ${limit}`);
   return res.json(teachers[0]);
 }
 
 export async function getTeacher(req: Request, res: Response): Promise<Response> {
   const id = req.params.teacherId;
+  const yearsOfExperience = req.query.yearsOfExperience || 10;
   const conn = await connect();
   const teacher = await conn.query(`SELECT teacher.id,
                                              first_name,
@@ -30,8 +34,8 @@ export async function getTeacher(req: Request, res: Response): Promise<Response>
                                              years_of_experience
                                       FROM teacher
                                       WHERE id = ?
-                                        AND years_of_experience > 10
-                                      ORDER BY last_name LIMIT 10`, [id]);
+                                        AND years_of_experience > '${yearsOfExperience}'
+                                      ORDER BY last_name`, [id]);
   return res.json(teacher[0]);
 }
 
