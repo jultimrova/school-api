@@ -74,6 +74,13 @@ export async function updateTeacher(req: Request, res: Response): Promise<Respon
 }
 
 export async function getTargetMathTeacher(req: Request, res: Response): Promise<Response> {
+  const subjectTaught = req.query.subjectTaught || 'Math';
+  const yearsOfExperience = req.query.yearsOfExperience || 10;
+  const dayOfWeek = req.query.dayOfWeek || 'Thursday';
+  const timeFrom = req.query.timeFrom || '08:30:00';
+  const timeTo = req.query.timeTo || '14:30:00';
+  const classroomName = req.query.classroomName || 100;
+  const limit = req.query.limit || 10;
   const conn = await connect();
   const mathTeacher = await conn.query(`SELECT t.id,
                                                  first_name,
@@ -85,13 +92,13 @@ export async function getTargetMathTeacher(req: Request, res: Response): Promise
                                           FROM teacher t
                                                    INNER JOIN lesson l ON l.teacher_id = t.id
                                                    INNER JOIN classroom c ON l.classroom_id = c.id
-                                          WHERE t.subject_taught = 'Math'
-                                            AND t.years_of_experience > 10
-                                            AND l.day_of_week = 'Thursday'
-                                            AND l.time_from = '08:30:00'
-                                            AND l.time_to = '14:30:00'
-                                            AND c.name = '100'
-                                          GROUP BY t.id`);
+                                          WHERE t.subject_taught = '${subjectTaught}'
+                                            AND t.years_of_experience > ${yearsOfExperience}
+                                            AND l.day_of_week = '${dayOfWeek}'
+                                            AND l.time_from = '${timeFrom}'
+                                            AND l.time_to = '${timeTo}'
+                                            AND c.name = '${classroomName}'
+                                          GROUP BY t.id LIMIT ${limit}`);
 
   return res.json(mathTeacher[0]);
 }

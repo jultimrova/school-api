@@ -49,18 +49,25 @@
 You should clone this repository and run command *npm install* to download dependencies
 
 Then run *npm run dev* to start our server. When you see in the console the server is running on the **** port. Open
-your browser on localhost(****). 
-Try type such urls after localhost:****
+your browser on localhost(****).
 
-/teachers
+***
 
-OR
+## TEACHER operations about teacher
 
-/teachers/mathTeachers
+***POST / teachers*** Create teacher
 
-OR
+***GET / teachers?gender=F&yearsOfExperience=15limit=5*** Read all teachers
 
-/teachers/1(any existing id in database)
+***GET / teachers / {id}?yearsOfExperience=20*** get teacher with id=?
 
-Also you can **ADD** **UPDATE** and **DELETE** teachers.
+***GET / teachers / mathTeachers?subjectTaught=Math&yearsOfExperience=5&dayOfWeek=Monday&timeFrom=12:00:00&timeTo=13:00:
+00&classroomName=105&limit=20*** get all math teachers who have more than 10 years of experience and teach in the
+classroom with number 100 every Thursday between 8:30 and 14:30.
+
+***PUT / teachers / {id}*** update teacher with id=?
+
+***DELETE / teachers / {id}*** delete teacher with id=?
+
+
 
