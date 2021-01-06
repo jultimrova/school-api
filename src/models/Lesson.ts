@@ -8,18 +8,13 @@ export interface Lesson {
     time_to: string;
 }
 
-enum Subject {
+export enum Subject {
     Alchemy = 'Alchemy',
     Physiology = 'Physiology',
     Science = 'Science',
-    Speech = 'Speech',
-    Strategy = 'Strategy',
-    Tactics = 'Tactics ',
     Law = 'Law',
     Biology = 'Biology',
     Math = 'Math',
-    Physics = 'Physics',
-    Other = 'Other'
 }
 
 enum WeekDay {

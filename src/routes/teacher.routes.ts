@@ -1,6 +1,11 @@
 import {Router} from 'express';
 import {
-    createTeacher, deleteTeacher, getTeacher, getTeachers, updateTeacher,
+    createTeacher,
+    deleteTeacher,
+    getTargetMathTeacher,
+    getTeacher,
+    getTeachers,
+    updateTeacher,
 } from '../controllers/teacher.controller';
 
 const router = Router();
@@ -8,6 +13,9 @@ const router = Router();
 router.route('/')
     .get(getTeachers)
     .post(createTeacher);
+
+router.route('/mathTeacher')
+    .get(getTargetMathTeacher);
 
 router.route('/:teacherId')
     .get(getTeacher)
