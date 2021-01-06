@@ -1,10 +1,10 @@
-import {Request, Response} from 'express';
-import {Teacher} from '../models/Teacher';
+import { Request, Response } from 'express';
+import { Teacher } from '../models/Teacher';
 import connect from '../db';
 
 export async function getTeachers(req: Request, res: Response): Promise<Response> {
-    const conn = await connect();
-    const teachers = await conn.query(`SELECT teacher.id,
+  const conn = await connect();
+  const teachers = await conn.query(`SELECT teacher.id,
                                               first_name,
                                               last_name,
                                               gender,
@@ -13,14 +13,15 @@ export async function getTeachers(req: Request, res: Response): Promise<Response
                                               years_of_experience
                                        FROM teacher
                                        WHERE gender = 'F'
+                                         AND years_of_experience > 15
                                        ORDER BY id LIMIT 10`);
-    return res.json(teachers[0]);
+  return res.json(teachers[0]);
 }
 
 export async function getTeacher(req: Request, res: Response): Promise<Response> {
-    const id = req.params.teacherId;
-    const conn = await connect();
-    const teacher = await conn.query(`SELECT teacher.id,
+  const id = req.params.teacherId;
+  const conn = await connect();
+  const teacher = await conn.query(`SELECT teacher.id,
                                              first_name,
                                              last_name,
                                              gender,
@@ -29,48 +30,48 @@ export async function getTeacher(req: Request, res: Response): Promise<Response>
                                              years_of_experience
                                       FROM teacher
                                       WHERE id = ?
-                                        AND years_of_experience > 5
+                                        AND years_of_experience > 10
                                       ORDER BY last_name LIMIT 10`, [id]);
-    return res.json(teacher[0]);
+  return res.json(teacher[0]);
 }
 
 export async function createTeacher(req: Request, res: Response): Promise<Response> {
-    const newTeacher: Teacher = req.body;
-    const conn = await connect();
-    await conn.query('INSERT INTO teacher SET ?', [newTeacher]);
-    return res.json({
-        message: `Teacher ${newTeacher.first_name} ${newTeacher.last_name} added`,
-        body: {
-            newTeacher
-        }
-    });
+  const newTeacher: Teacher = req.body;
+  const conn = await connect();
+  await conn.query('INSERT INTO teacher SET ?', [newTeacher]);
+  return res.json({
+    message: `Teacher ${newTeacher.first_name} ${newTeacher.last_name} added`,
+    body: {
+      newTeacher,
+    },
+  });
 }
 
 export async function deleteTeacher(req: Request, res: Response): Promise<Response> {
-    const id = req.params.teacherId;
-    const conn = await connect();
-    await conn.query('DELETE FROM teacher WHERE id = ?', [id]);
-    return res.json({
-        message: 'Teacher was deleted',
-    });
+  const id = req.params.teacherId;
+  const conn = await connect();
+  await conn.query('DELETE FROM teacher WHERE id = ?', [id]);
+  return res.json({
+    message: 'Teacher was deleted',
+  });
 }
 
 export async function updateTeacher(req: Request, res: Response): Promise<Response> {
-    const id = req.params.teacherId;
-    const updatedTeacher: Teacher = req.body;
-    const conn = await connect();
-    await conn.query('UPDATE teacher SET ? WHERE id = ?', [updatedTeacher, id]);
-    return res.json({
-        message: 'Teacher was updated',
-        body: {
-            updatedTeacher
-        }
-    });
+  const id = req.params.teacherId;
+  const updatedTeacher: Teacher = req.body;
+  const conn = await connect();
+  await conn.query('UPDATE teacher SET ? WHERE id = ?', [updatedTeacher, id]);
+  return res.json({
+    message: 'Teacher was updated',
+    body: {
+      updatedTeacher,
+    },
+  });
 }
 
 export async function getTargetMathTeacher(req: Request, res: Response): Promise<Response> {
-    const conn = await connect();
-    const mathTeacher = await conn.query(`SELECT t.id,
+  const conn = await connect();
+  const mathTeacher = await conn.query(`SELECT t.id,
                                                  first_name,
                                                  last_name,
                                                  gender,
@@ -88,5 +89,5 @@ export async function getTargetMathTeacher(req: Request, res: Response): Promise
                                             AND c.name = '100'
                                           GROUP BY t.id`);
 
-    return res.json(mathTeacher[0]);
+  return res.json(mathTeacher[0]);
 }
