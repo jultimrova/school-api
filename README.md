@@ -59,15 +59,15 @@ your browser on localhost(****).
 
 ***GET / teachers?gender=F&yearsOfExperience=15limit=5*** Read all teachers
 
-***GET / teachers / {id}?yearsOfExperience=20*** get teacher with id=?
+***GET / teachers / {id}*** get teacher with id=?
 
 ***GET / teachers / mathTeachers?subjectTaught=Math&yearsOfExperience=5&dayOfWeek=Monday&timeFrom=12:00:00&timeTo=13:00:
 00&classroomName=105&limit=20*** get all math teachers who have more than 10 years of experience and teach in the
 classroom with number 100 every Thursday between 8:30 and 14:30.
 
-***PUT / teachers / {id}*** update teacher with id=?
+***PUT / teachers / {id}*** Update teacher with id=?
 
-***DELETE / teachers / {id}*** delete teacher with id=?
+***DELETE / teachers / {id}*** Delete teacher with id=?
 
 
 
