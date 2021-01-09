@@ -93,8 +93,10 @@ export async function updateTeacher(req: Request, res: Response): Promise<Respon
     });
 }
 
+// method was implemented according to the requirements but can be adapted as getTeachers
+
 export async function getTargetMathTeacher(req: Request, res: Response): Promise<Response> {
-    const subjectTaught = req.query.subjectTaught || 'Math';
+    const subjectTaught = req.query.subjectTaught = 'Math';
     const yearsOfExperience = req.query.yearsOfExperience || 10;
     const dayOfWeek = req.query.dayOfWeek || 'Thursday';
     const timeFrom = req.query.timeFrom || '08:30:00';
